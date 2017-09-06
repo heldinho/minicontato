@@ -59,7 +59,7 @@ CREATE TABLE `emails` (
 --
 
 INSERT INTO `emails` (`id`, `id_tipo`, `id_contato`, `tipo`, `email`) VALUES
-(1, 0, 3, 2, 'asdf@asdf.com');
+(1, 0, 3, 2, 'helderferreirapassos@gmail.com');
 
 -- --------------------------------------------------------
 
@@ -80,7 +80,7 @@ CREATE TABLE `telefones` (
 --
 
 INSERT INTO `telefones` (`id`, `id_tipo`, `id_contato`, `tipo`, `fone`) VALUES
-(1, 0, 3, 1, 11966880403);
+(1, 0, 3, 1, 11967290577);
 
 -- --------------------------------------------------------
 
