@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 01-Set-2017 às 09:39
+-- Generation Time: 06-Set-2017 às 01:20
 -- Versão do servidor: 10.1.24-MariaDB
 -- PHP Version: 7.1.6
 
@@ -25,22 +25,20 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `contato`
+-- Estrutura da tabela `contatos`
 --
 
-CREATE TABLE `contato` (
+CREATE TABLE `contatos` (
   `id` int(11) NOT NULL,
-  `nome` varchar(50) NOT NULL,
-  `email` varchar(50) NOT NULL,
-  `telefone` bigint(11) NOT NULL
+  `nome` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Extraindo dados da tabela `contato`
+-- Extraindo dados da tabela `contatos`
 --
 
-INSERT INTO `contato` (`id`, `nome`, `email`, `telefone`) VALUES
-(1, 'Helder Ferreira Passos', 'helderferreirapassos@gmail.com', 11967290577);
+INSERT INTO `contatos` (`id`, `nome`) VALUES
+(3, 'Helder Ferreira Passos');
 
 -- --------------------------------------------------------
 
@@ -50,6 +48,7 @@ INSERT INTO `contato` (`id`, `nome`, `email`, `telefone`) VALUES
 
 CREATE TABLE `emails` (
   `id` int(11) NOT NULL,
+  `id_tipo` int(11) NOT NULL,
   `id_contato` int(11) NOT NULL,
   `tipo` int(11) NOT NULL,
   `email` varchar(50) NOT NULL
@@ -59,8 +58,8 @@ CREATE TABLE `emails` (
 -- Extraindo dados da tabela `emails`
 --
 
-INSERT INTO `emails` (`id`, `id_contato`, `tipo`, `email`) VALUES
-(1, 1, 1, 'helder-passos@hotmail.com');
+INSERT INTO `emails` (`id`, `id_tipo`, `id_contato`, `tipo`, `email`) VALUES
+(1, 0, 3, 2, 'asdf@asdf.com');
 
 -- --------------------------------------------------------
 
@@ -70,9 +69,43 @@ INSERT INTO `emails` (`id`, `id_contato`, `tipo`, `email`) VALUES
 
 CREATE TABLE `telefones` (
   `id` int(11) NOT NULL,
+  `id_tipo` int(11) NOT NULL,
   `id_contato` int(11) NOT NULL,
   `tipo` int(11) NOT NULL,
   `fone` bigint(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `telefones`
+--
+
+INSERT INTO `telefones` (`id`, `id_tipo`, `id_contato`, `tipo`, `fone`) VALUES
+(1, 0, 3, 1, 11966880403);
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `tipo_emails`
+--
+
+CREATE TABLE `tipo_emails` (
+  `id` int(11) NOT NULL,
+  `id_email` int(11) NOT NULL,
+  `id_contato` int(11) NOT NULL,
+  `nome` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `tipo_telefones`
+--
+
+CREATE TABLE `tipo_telefones` (
+  `id` int(11) NOT NULL,
+  `id_telefone` int(11) NOT NULL,
+  `id_contato` int(11) NOT NULL,
+  `nome` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -80,9 +113,9 @@ CREATE TABLE `telefones` (
 --
 
 --
--- Indexes for table `contato`
+-- Indexes for table `contatos`
 --
-ALTER TABLE `contato`
+ALTER TABLE `contatos`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -98,14 +131,26 @@ ALTER TABLE `telefones`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `tipo_emails`
+--
+ALTER TABLE `tipo_emails`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `tipo_telefones`
+--
+ALTER TABLE `tipo_telefones`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT for table `contato`
+-- AUTO_INCREMENT for table `contatos`
 --
-ALTER TABLE `contato`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=85;
+ALTER TABLE `contatos`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `emails`
 --
@@ -115,6 +160,16 @@ ALTER TABLE `emails`
 -- AUTO_INCREMENT for table `telefones`
 --
 ALTER TABLE `telefones`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+--
+-- AUTO_INCREMENT for table `tipo_emails`
+--
+ALTER TABLE `tipo_emails`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `tipo_telefones`
+--
+ALTER TABLE `tipo_telefones`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
