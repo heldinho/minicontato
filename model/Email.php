@@ -3,115 +3,115 @@
 require('../dao/Conn.php');
 
 class Email {
-	
-	private $tipo;
-	private $email;
 
-	public function setTipo($tipo){
-		$this->tipo = $tipo;
-	}
+    private $tipo;
+    private $email;
 
-	public function getTipo(){
-		return $this->tipo;
-	}
+    public function setTipo($tipo) {
+        $this->tipo = $tipo;
+    }
 
-	public function setEmail($email){
-		$this->email = $email;
-	}
+    public function getTipo() {
+        return $this->tipo;
+    }
 
-	public function getEmail(){
-		return $this->email;
-	}
+    public function setEmail($email) {
+        $this->email = $email;
+    }
 
-	public function novoEmail($id_contato, $tipo, $email){
-		try {
-			$conexao = new Conn();
-			$pdo = $conexao->conectar();
-			$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		    $pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
-		    $pdo->setAttribute(PDO::ATTR_STRINGIFY_FETCHES, false);
-		    $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+    public function getEmail() {
+        return $this->email;
+    }
 
-			$sql = 'INSERT INTO emails (id_contato, tipo, email) VALUES (:id_contato, :tipo, :email)';
-			$stmt = $pdo->prepare($sql);
-			$stmt->bindParam(':id_contato', $id_contato, PDO::PARAM_STR);
-			$stmt->bindParam(':tipo', $tipo, PDO::PARAM_STR);
-			$stmt->bindParam(':email', $email, PDO::PARAM_STR);
-			if($stmt->execute()){
-				return json_encode(true);
-			}else{
-				return json_encode(false);
-			}
-		} catch (PDOException $e) {
-	        return $e->getMessage();
-	    }
-	}
+    public function novoEmail($id_contato, $tipo, $email) {
+        try {
+            $conexao = new Conn();
+            $pdo = $conexao->conectar();
+            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+            $pdo->setAttribute(PDO::ATTR_STRINGIFY_FETCHES, false);
+            $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 
-	public function listarEmails($id){
-		try {
-			$conexao = new Conn();
-			$pdo = $conexao->conectar();
-			$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		    $pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
-		    $pdo->setAttribute(PDO::ATTR_STRINGIFY_FETCHES, false);
-		    $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+            $sql = 'INSERT INTO emails (id_contato, tipo, email) VALUES (:id_contato, :tipo, :email)';
+            $stmt = $pdo->prepare($sql);
+            $stmt->bindParam(':id_contato', $id_contato, PDO::PARAM_STR);
+            $stmt->bindParam(':tipo', $tipo, PDO::PARAM_STR);
+            $stmt->bindParam(':email', $email, PDO::PARAM_STR);
+            if ($stmt->execute()) {
+                return json_encode(true);
+            } else {
+                return json_encode(false);
+            }
+        } catch (PDOException $e) {
+            return $e->getMessage();
+        }
+    }
 
-	        $lista = $pdo->query("SELECT * FROM emails WHERE id_contato = $id");
+    public function listarEmails($id) {
+        try {
+            $conexao = new Conn();
+            $pdo = $conexao->conectar();
+            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+            $pdo->setAttribute(PDO::ATTR_STRINGIFY_FETCHES, false);
+            $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 
-	        if ($lista) {
-	            return $lista->fetchAll(PDO::FETCH_OBJ);
-	        } else {
-	            return false;
-	        }
-	    } catch (PDOException $e) {
-	        return $e->getMessage();
-	    }
-	}
+            $lista = $pdo->query("SELECT * FROM emails WHERE id_contato = $id");
 
-	public function deletarEmail($id){
-		try {
-			$conexao = new Conn();
-			$pdo = $conexao->conectar();
-			$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		    $pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
-		    $pdo->setAttribute(PDO::ATTR_STRINGIFY_FETCHES, false);
-		    $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+            if ($lista) {
+                return $lista->fetchAll(PDO::FETCH_OBJ);
+            } else {
+                return false;
+            }
+        } catch (PDOException $e) {
+            return $e->getMessage();
+        }
+    }
 
-	        $sql = 'DELETE FROM emails WHERE id = :id';
-			$stmt = $pdo->prepare($sql);
-			$stmt->bindParam(':id', intval($id), PDO::PARAM_INT);
+    public function deletarEmail($id) {
+        try {
+            $conexao = new Conn();
+            $pdo = $conexao->conectar();
+            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+            $pdo->setAttribute(PDO::ATTR_STRINGIFY_FETCHES, false);
+            $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 
-	        if($stmt->execute()){
-				return json_encode(true);
-			}else{
-				return json_encode(false);
-			}
-	    } catch (PDOException $e) {
-	        return $e->getMessage();
-	    }
-	}
+            $sql = 'DELETE FROM emails WHERE id = :id';
+            $stmt = $pdo->prepare($sql);
+            $stmt->bindParam(':id', intval($id), PDO::PARAM_INT);
 
-	public function viewEmails($id){
-		try {
-			$conexao = new Conn();
-			$pdo = $conexao->conectar();
-			$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		    $pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
-		    $pdo->setAttribute(PDO::ATTR_STRINGIFY_FETCHES, false);
-		    $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+            if ($stmt->execute()) {
+                return json_encode(true);
+            } else {
+                return json_encode(false);
+            }
+        } catch (PDOException $e) {
+            return $e->getMessage();
+        }
+    }
 
-	        $sql = 'SELECT * FROM emails WHERE id_contato = :id';
-			$stmt = $pdo->prepare($sql);
-	        $stmt->bindParam(':id', intval($id), PDO::PARAM_INT);
+    public function viewEmails($id) {
+        try {
+            $conexao = new Conn();
+            $pdo = $conexao->conectar();
+            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+            $pdo->setAttribute(PDO::ATTR_STRINGIFY_FETCHES, false);
+            $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 
-	        if ($stmt->execute()) {
-	            return $stmt->fetchAll(PDO::FETCH_OBJ);
-	        } else {
-	            return false;
-	        }
-	    } catch (PDOException $e) {
-	        return $e->getMessage();
-	    }
-	}
+            $sql = 'SELECT * FROM emails WHERE id_contato = :id';
+            $stmt = $pdo->prepare($sql);
+            $stmt->bindParam(':id', intval($id), PDO::PARAM_INT);
+
+            if ($stmt->execute()) {
+                return $stmt->fetchAll(PDO::FETCH_OBJ);
+            } else {
+                return false;
+            }
+        } catch (PDOException $e) {
+            return $e->getMessage();
+        }
+    }
 
 }

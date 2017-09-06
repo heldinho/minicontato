@@ -1,87 +1,83 @@
 <?php
 
 namespace model;
+
 use dao\Conn;
 
 class Login {
-	
-	private $email;
-	private $senha;
-	private $lembrete;
 
-	function __construct(){
-		$conexao = new Conn();
-		$pdo = $conexao->conectar();
-	}
+    private $email;
+    private $senha;
+    private $lembrete;
 
-	function setEmail($email){
-		$this->email = $email;
-	}
+    function __construct() {
+        $conexao = new Conn();
+        $pdo = $conexao->conectar();
+    }
 
-	function getEmail(){
-		return $this->email;
-	}
+    function setEmail($email) {
+        $this->email = $email;
+    }
 
-	function setSenha($senha){
-		$this->senha = $senha;
-	}
+    function getEmail() {
+        return $this->email;
+    }
 
-	function getSenha(){
-		return $this->senha;
-	}
+    function setSenha($senha) {
+        $this->senha = $senha;
+    }
 
-	function setLembrete($lembrete){
-		$this->lembrete = $lembrete;
-	}
+    function getSenha() {
+        return $this->senha;
+    }
 
-	function getLembrete(){
-		return $this->lembrete;
-	}
+    function setLembrete($lembrete) {
+        $this->lembrete = $lembrete;
+    }
 
-	function AcessoLogin($email, $senha, $lembrete){
+    function getLembrete() {
+        return $this->lembrete;
+    }
 
-		if (!empty($email) && !empty($senha)) {
-			$sql = 'SELECT id, nome, email FROM login WHERE email = ? AND senha = ?';
-			$stm = $pdo->prepare($sql);
-			$stm->bindValue(1, $email);
-			$stm->bindValue(2, $email);
-			$stm->execute();
-			$dados = $stm->fetch(PDO::FETCH_OBJ);
+    function AcessoLogin($email, $senha, $lembrete) {
 
-				if(!empty($dados)) {
+        if (!empty($email) && !empty($senha)) {
+            $sql = 'SELECT id, nome, email FROM login WHERE email = ? AND senha = ?';
+            $stm = $pdo->prepare($sql);
+            $stm->bindValue(1, $email);
+            $stm->bindValue(2, $email);
+            $stm->execute();
+            $dados = $stm->fetch(PDO::FETCH_OBJ);
 
-					$_SESSION['id'] = $dados->id;
-					$_SESSION['nome'] = $dados->nome;
-					$_SESSION['email'] = $dados->email;
-					$_SESSION['logado'] = TRUE;
+            if (!empty($dados)) {
 
-					if($this->getLembrete() == 'SIM') {
+                $_SESSION['id'] = $dados->id;
+                $_SESSION['nome'] = $dados->nome;
+                $_SESSION['email'] = $dados->email;
+                $_SESSION['logado'] = TRUE;
 
-					   $expira = time() + 60*60*24*30; 
-					   setCookie('CookieLembrete', base64_encode('SIM'), $expira);
-					   setCookie('CookieEmail', base64_encode($email), $expira);
-					   setCookie('CookieSenha', base64_encode($senha), $expira);
+                if ($this->getLembrete() == 'SIM') {
 
-					} else {
+                    $expira = time() + 60 * 60 * 24 * 30;
+                    setCookie('CookieLembrete', base64_encode('SIM'), $expira);
+                    setCookie('CookieEmail', base64_encode($email), $expira);
+                    setCookie('CookieSenha', base64_encode($senha), $expira);
+                } else {
 
-					   setCookie('CookieLembrete');
-					   setCookie('CookieEmail');
-					   setCookie('CookieSenha');
+                    setCookie('CookieLembrete');
+                    setCookie('CookieEmail');
+                    setCookie('CookieSenha');
+                }
 
-					}
+                return json_encode(1);
+                //return "<script>window.location = '../home.html'</script>";
+            } else {
 
-					return json_encode(1);
-					//return "<script>window.location = '../home.html'</script>";
-				} else {
-
-					$_SESSION['logado'] = FALSE;
-				    return json_encode(0);
-				    //return "<script>window.location = '../index.php'</script>";
-
-				}
-
-			}
-
-		}
+                $_SESSION['logado'] = FALSE;
+                return json_encode(0);
+                //return "<script>window.location = '../index.php'</script>";
+            }
+        }
+    }
 
 }

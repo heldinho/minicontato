@@ -12,18 +12,20 @@ $classLogin->setLembrete((isset($_POST['lembrete'])) ? $_POST['lembrete'] : '');
 $jsonArray = array();
 
 switch ($acao) {
-	case 'login':{
-		echo json_encode($classLogin->AcessoLogin($classLogin->getEmail(), $classLogin->getSenha(), $classLogin->getLembrete()));
-	}break;
-	
-	case 'logout':{}break;
+    case 'login': {
+            echo json_encode($classLogin->AcessoLogin($classLogin->getEmail(), $classLogin->getSenha(), $classLogin->getLembrete()));
+        }break;
 
-	case 'cookie':{
-		$jsonArray['dados'][] = array(
-                'email' 	=> (isset($_COOKIE['CookieEmail'])) ? base64_decode($_COOKIE['CookieEmail']) : '',
-                'senha' 	=> (isset($_COOKIE['CookieSenha'])) ? base64_decode($_COOKIE['CookieSenha']) : '',
-                'lembrete'	=> (isset($_COOKIE['CookieLembrete'])) ? base64_decode($_COOKIE['CookieLembrete']) : ''
+    case 'logout': {
+
+        }break;
+
+    case 'cookie': {
+            $jsonArray['dados'][] = array(
+                'email' => (isset($_COOKIE['CookieEmail'])) ? base64_decode($_COOKIE['CookieEmail']) : '',
+                'senha' => (isset($_COOKIE['CookieSenha'])) ? base64_decode($_COOKIE['CookieSenha']) : '',
+                'lembrete' => (isset($_COOKIE['CookieLembrete'])) ? base64_decode($_COOKIE['CookieLembrete']) : ''
             );
-		echo json_encode($jsonArray);
-	}break;
+            echo json_encode($jsonArray);
+        }break;
 }
