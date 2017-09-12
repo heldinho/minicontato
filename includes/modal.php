@@ -33,7 +33,7 @@
                             <option value="3">Trabalho</option>
                         </select>
                         <div class="form-group input-group">
-                            <span class="input-group-addon"><i class="fa fa-phone"></i></span>
+                            <span class="input-group-addon"><img width="20" height="20" src="assets/img/phone_14402.png"></span>
                             <input class="form-control" name="add-telefone" id="add-telefone" placeholder="Telefone" type="text" maxlength="15">
                         </div>
                         <div class="form-group text-right"><a href="javascript:;" id="btn-add-tel" class="btn btn-primary btn-sm">Adicionar</a></div>
@@ -52,7 +52,7 @@
                             <option value="2">Trabalho</option>
                         </select>
                         <div class="form-group input-group">
-                            <span class="input-group-addon"><i class="fa fa-at"></i></span>
+                            <span class="input-group-addon"><img width="20" height="20" src="assets/img/email_14410.png"></span>
                             <input class="form-control" id="add-email" placeholder="E-Mail" type="text">
                         </div>
                         <div class="form-group text-right"><a href="javascript:;" id="btn-add-email" class="btn btn-primary btn-sm">Adicionar</a></div>
